@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "build": "node convert.js"
+    "build": "pnpm run convert && pnpm run parcel",
+    "convert": "node convert.js",
+    "parcel": "parcel build .output/index.html"
   },
   "type": "module",
   "dependencies": {
@@ -8,11 +10,11 @@
     "cli-progress": "^3.12.0",
     "html-minifier": "^4.0.0",
     "iconv-lite": "^0.6.3",
+    "parcel": "^2.9.3",
     "tidy-html5": "^0.1.1"
   },
   "name": "results",
   "version": "1.0.1",
-  "main": "convert.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/willkerry/sudbury-regatta-results.git"

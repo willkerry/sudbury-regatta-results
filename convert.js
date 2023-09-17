@@ -72,6 +72,14 @@ function regAddLink(str) {
   return str.toString().replace(/<body>/, `<body>${RETURN_LINK_HTML}`);
 }
 
+// add a charset meta tag
+function regAddCharsetMetaTag(str) {
+  if (!str) throw new Error("Input is empty");
+  const charsetMetaTag = `<meta charset="iso-8859-1">`;
+
+  return str.toString().replace(/<head>/, `<head>${charsetMetaTag}`);
+}
+
 /** Add viewport meta tag. */
 function regAddVieportMetaTag(str) {
   if (!str) throw new Error("Input is empty");
@@ -149,6 +157,7 @@ fs.readdirSync(INPUT_DIR).forEach((folder) => {
       output = regTidy(output);
       output = regAddLink(output);
       output = regAddVieportMetaTag(output);
+      output = regAddCharsetMetaTag(output);
       output = regMinify(output);
     }
     // If file is CSS, apply CSS transformations.
@@ -156,7 +165,7 @@ fs.readdirSync(INPUT_DIR).forEach((folder) => {
       output = regMinifyCSS(output);
     }
 
-    fs.writeFileSync(outputFile, output);
+    fs.writeFileSync(outputFile, output.replace(/&amp;/g, "&"));
   });
   progress.stop();
   process.stdout.write(`\n`);
